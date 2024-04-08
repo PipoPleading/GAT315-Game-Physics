@@ -8,6 +8,7 @@ public class RigidBodyMovement : MonoBehaviour
     [SerializeField] ForceMode mode;
     [SerializeField] Vector3 torque;
     [SerializeField] ForceMode torqueMode;
+    [SerializeField] KeyCode jumpKey;
 
     Rigidbody rb;
     // Start is called before the first frame update
@@ -16,10 +17,22 @@ public class RigidBodyMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if(Input.GetKey(KeyCode.Space))
+        if (Input.GetKeyDown(jumpKey))
+        {
+            //includes time delta
+            rb.AddForce(Vector3.up * 10, ForceMode.Impulse);
+
+            //relative to it's world position
+            //rb.AddRelativeForce(force, mode);
+
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (Input.GetKey(KeyCode.Space))
         {
             //includes time delta
             rb.AddForce(force, mode);
